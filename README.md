@@ -1,5 +1,10 @@
 # riscv32i-multicycle-cpu
+
 Verilog implementation of a multi-cycle RV32I RISC-V CPU featuring datapath, FSM-based controller, complete RV32I instruction support, memory subsystem, and memory-mapped UART peripheral.
+
+## Repository Structure
+
+```text
 CPU_Verilog_Files/
 │
 ├── cpu.v                 # Top-level RV32I CPU integrating datapath and controller
@@ -35,4 +40,28 @@ CPU_Verilog_Files/
 ├── testbench.v           # Top-level verification environment
 │
 ├── riscvtest.asm         # RISC-V assembly test program
-├── riscvtest.txt         # Machine-code image loaded into instruction memory
+└── riscvtest.txt         # Machine-code image loaded into instruction memory
+```
+
+## Architecture Overview
+
+- Multi-cycle RV32I RISC-V processor
+- FSM-based controller
+- Modular datapath architecture
+- 32 × 32-bit register file
+- ALU supporting arithmetic and logical operations
+- Load/store memory subsystem
+- Branch and jump execution support
+- Memory-mapped UART peripheral
+- Assembly-level and RTL verification
+
+## Features
+
+- Complete RV32I instruction set support
+- Verilog RTL implementation
+- Multi-cycle CPU microarchitecture
+- Memory-mapped I/O support
+- UART transmitter and receiver
+- Modular and synthesizable design
+- Comprehensive testbench for functional verification
+```
