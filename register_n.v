@@ -1,35 +1,26 @@
-module register_n
-  #(parameter WIDTH = 8)
-   (reset,clock,enable,D,Q);
+module register_n 
+#(parameter WIDTH = 8)
+(
+input wire reset,
+input wire clock,
+input enable,
+input wire [WIDTH-1:0] D,
+output reg [WIDTH-1:0] Q
+);
 
-   input reset;
-   input clock;
-   input enable;
-   input [WIDTH-1:0] D;
-   output reg [WIDTH-1:0] Q;
+always@(posedge clock or negedge reset) begin
+
+	if(reset) begin
+		Q <= '0;
+	end
 	
-always @(posedge clock or posedge reset) 
-begin
-    if (reset) 
-	 begin
-      // Reset condition: Initialize Q to all 0's
-      Q <= {WIDTH{1'b0}};
-    end 
-	 
-	 else if (enable) 
-	 begin
-      // Enable condition: Assign D to Q on the rising edge of clock
-      Q <= D;
-    end
-	 
-	 else
-	 
-	 begin
-	 	 
-    // If enable = 0, Q maintains its current value
-		Q<=Q;
-	 
-	 end 
+	else begin
+		if(enable) 
+			Q <= D;
+		else
+			Q <= Q;
+	end
 
-  end
-endmodule
+end
+
+endmodule 

@@ -1,50 +1,50 @@
-module ALU_decoder(opb5,funct3,funct7b5,ALUOp,ALUControl);
+module ALU_decoder (
+input wire opb5,
+input wire [2:0] funct3,
+input wire funct7b5,
+input wire [1:0] ALUOp,
+output reg [3:0] ALUControl
+);
 
-   input opb5;
-   input [2:0] funct3;
-   input       funct7b5;
-   input [1:0] ALUOp;
-   output reg [3:0] ALUControl;
-   wire [3:0] cnct;
-   
-assign cnct = {opb5,funct3}; ///concatanation between opb5 and func3
+wire [4:0] control;
 
-always@(*)begin
+assign control = {opb5, funct3, funct7b5};
 
-case (ALUOp)
+always@(*) begin
 
-	2'b00: ALUControl<=4'b0000;
-	2'b01: ALUControl<=4'b0001;
-	2'b10: 
-		case(cnct)
-		4'b0000: ALUControl<=4'b0000;
-		4'b0001: 
-			begin
-			if (funct7b5 == 0)
-				ALUControl<=4'b0110;
-			else
-				ALUControl<=ALUControl;
-				//ALUControl<=4'bxxxx; //default
+	case(ALUOp)
+		2'b00: ALUControl = 4'b0000;
+		
+		2'b01: ALUControl = 4'b0001;
+		
+		2'b10: begin
+			case(control)
+				5'b00000: ALUControl = 4'b0000;	
+				5'b00010: ALUControl = 4'b0110;	
+				5'b00100: ALUControl = 4'b0101;	
+				5'b00110: ALUControl = 4'b1001;	
+				5'b01000: ALUControl = 4'b0100;	
+				5'b01010: ALUControl = 4'b0111;	
+				5'b01011: ALUControl = 4'b1000;	
+				5'b01100: ALUControl = 4'b0011;	
+				5'b01110: ALUControl = 4'b0010;	
+				5'b10000: ALUControl = 4'b0000;	
+				5'b10001: ALUControl = 4'b0001;	
+				5'b10010: ALUControl = 4'b0110;	
+				5'b10100: ALUControl = 4'b0101;
+				5'b10110: ALUControl = 4'b1001;
+				5'b11000: ALUControl = 4'b0100;	
+				5'b11010: ALUControl = 4'b0111;	
+				5'b11011: ALUControl = 4'b1000;	
+				5'b11100: ALUControl = 4'b0011;		
+				5'b11110: ALUControl = 4'b0010;		
+				default: ALUControl = 4'b0000;
+			endcase
 			end
 
-		4'b0010: ALUControl<=4'b0101;
-		4'b0011: ALUControl<=4'b1001;
-		4'b0100: ALUControl<=4'b0100;
-		4'b0101: 
-			begin
-			if (funct7b5 == 0)
-				ALUControl<=4'b0111;
-			else
-				ALUControl<=4'b1000;
-			end
-		4'b0110: ALUControl<=4'b0011;
-		4'b0111: ALUControl<=4'b0010;
-		default: ALUControl<=ALUControl;
-		//default: ALUControl<=4'bxxxx;
-		endcase
-	default: ALUControl<=ALUControl;
-	//default: ALUControl<=4'bxxxx;
-endcase
+	default: ALUControl = 4'b0000;
+	endcase
+
+
 end
-
 endmodule

@@ -1,8 +1,13 @@
 module zero_extend
-  #(parameter WIDTH = 8, ZEROS = 24)
-  (a,ZeroExt);
+#(
+    parameter WIDTH = 8,
+    parameter ZEROS = 24
+)
+(
+    input  wire [WIDTH-1:0] a,
+    output wire [WIDTH+ZEROS-1:0] ZeroExt
+);
 
-   input [WIDTH-1:0] a;
-   output [31:0] ZeroExt;
-   assign ZeroExt = {{32-WIDTH{1'b0}}, a};
+assign ZeroExt = {{ZEROS{1'b0}}, a};
+
 endmodule
